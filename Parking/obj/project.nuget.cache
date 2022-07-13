@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "u3vyUIZXMgEPXKk4DROkYHjxitGvcjIuyRD1vBe0gQa5di6R7L4I+lgsuJGH0F9B2EdzWFk8cETuFfHJbFauHA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Ita\\Downloads\\Parking\\Parking\\Parking.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Ita\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.21\\microsoft.netcore.app.host.win-x64.3.1.21.nupkg.sha512",
+    "C:\\Users\\Ita\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.10\\microsoft.aspnetcore.app.ref.3.1.10.nupkg.sha512",
+    "C:\\Users\\Ita\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\3.1.0\\microsoft.windowsdesktop.app.ref.3.1.0.nupkg.sha512",
+    "C:\\Users\\Ita\\.nuget\\packages\\microsoft.netcore.app.ref\\3.1.0\\microsoft.netcore.app.ref.3.1.0.nupkg.sha512"
+  ],
+  "logs": []
+}
