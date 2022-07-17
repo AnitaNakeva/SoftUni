@@ -1,0 +1,51 @@
+﻿using ConsoleApp138.Exceptions;
+using ConsoleApp138.Factories.Interfaces;
+using ConsoleApp138.Models.Animal;
+using ConsoleApp138.Models.Animal.Birds;
+using ConsoleApp138.Models.Animal.Mammals;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp138.Factories
+{
+    internal class AnimalFactory:IAnimalFactory
+    {
+        public Animal CreateAnimal(string type, string name, double weight, string thirdParam, string fourthParam = null)
+        {
+            Animal animal;
+            if (type == "Owl")
+            {
+                animal = new Owl(name, weight, double.Parse(thirdParam));
+            }
+            else if (type == "Hen")
+            {
+                animal = new Hen(name, weight, double.Parse(thirdParam));
+            }
+            else if (type == "Mouse")
+            {
+                animal = new Mouse(name, weight, thirdParam);
+            }
+            else if (type == "Dog")
+            {
+                animal = new Dog(name, weight, thirdParam);
+            }
+            else if (type == "Cat")
+            {
+                animal = new Cat(name, weight, thirdParam, fourthParam);
+            }
+            else if (type == "Tiger")
+            {
+                animal = new Tiger(name, weight, thirdParam, fourthParam);
+            }
+            else
+            {
+                throw new InvalidFactoryTypeException();
+            }
+
+            return animal;
+        }
+    }
+}
