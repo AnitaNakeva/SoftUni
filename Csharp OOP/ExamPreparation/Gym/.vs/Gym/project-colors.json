@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "58221698-b747-4a6c-9253-d036e0a9ce64": {
+      "ProjectGuid": "58221698-b747-4a6c-9253-d036e0a9ce64",
+      "DisplayName": "Gym",
+      "ColorIndex": 0
+    },
+    "cf65bd75-7654-49aa-9d81-f0eae852be70": {
+      "ProjectGuid": "cf65bd75-7654-49aa-9d81-f0eae852be70",
+      "DisplayName": "Gym",
+      "ColorIndex": 1
+    }
+  },
+  "NextColorIndex": 2
+}

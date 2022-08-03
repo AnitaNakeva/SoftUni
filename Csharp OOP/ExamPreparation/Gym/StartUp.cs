@@ -1,11 +1,14 @@
-﻿namespace Gyms
+﻿namespace Gym
 {
-    using System;
-
-    class StartUp
+    using Gym.Core;
+    using Gym.Core.Contracts;
+    public class StartUp
     {
-        static void Main(string[] args)
+        public static void Main()
         {
+            // Don't forget to comment out the commented code lines in the Engine class!
+            IEngine engine = new Engine();
+            engine.Run();
         }
     }
 }
