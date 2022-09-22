@@ -1,0 +1,29 @@
+function addRemove(arr){
+    let result = [];
+    for(let i = 0; i<arr.length; i++){
+        let command = arr[i];
+        if(command==='add'){
+            result.push(i+1);
+        }
+        else{
+            if(result.length>0){
+                result.pop();
+            }
+        }
+    }
+
+    if(result.length===0){
+        console.log('Empty');
+    }
+    else{
+        result.forEach(element => {
+            console.log(element);
+        });
+    }
+}
+
+addRemove(['remove', 
+'remove', 
+'remove']
+
+);
