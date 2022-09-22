@@ -4,7 +4,7 @@ function rotateArray(arr, times){
         arr.unshift(last);
     }
 
-    console.log(arr.join());
+    console.log(arr.join(' '));
 }
 
 rotateArray(['Banana', 
