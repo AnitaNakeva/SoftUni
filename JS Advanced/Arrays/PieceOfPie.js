@@ -1,16 +1,8 @@
 function pieceFoPie(arr, first, second){
-    let indexFirst;
-    let indexSecond;
-    for(let i = 0; i<=arr.length-1; i++){
-        if(arr[i]==first){
-            indexFirst=i;
-        }
-        else if(arr[i]==second){
-            indexSecond=i;
-        }
-    }
-
-    let result = arr.slice(indexFirst, indexSecond+1);
+    let indexFirst = arr.indexOf(first);
+    let indexSecond = arr.indexOf(second)+1;
+    
+    let result = arr.slice(indexFirst, indexSecond);
     return result;
 }
 
