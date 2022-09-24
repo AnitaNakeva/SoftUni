@@ -4,7 +4,7 @@ function cityRecord(name, population, treasury){
     city['population'] = population;
     city['treasury'] = treasury;
 
-    console.log(city);
+    return(city);
 }
 
 cityRecord('Tortuga',
