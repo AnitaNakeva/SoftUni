@@ -5,7 +5,7 @@ function constCrew(obj){
         obj.dizziness=false;
     }
 
-    console.log(obj);
+    return(obj);
 }
 
 constCrew({ weight: 80,
