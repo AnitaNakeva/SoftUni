@@ -30,7 +30,7 @@ function carFact(obj){
     let wheels = [wheelssize, wheelssize, wheelssize, wheelssize];
     res.wheels = wheels;
 
-    console.log(res);
+    return(res);
 }
 
 carFact({ model: 'VW Golf II',

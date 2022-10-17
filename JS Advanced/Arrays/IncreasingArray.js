@@ -8,7 +8,7 @@ function increasingArray(arr){
         }
     }
 
-    console.log(result);
+    return(result);
 }
 
 increasingArray([1, 
