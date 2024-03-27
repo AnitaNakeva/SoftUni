@@ -1,2 +1,1 @@
-Changed README:
-Courses from my education in SoftUni
+Courses from my education in SoftUni (C# OOP, JS Advanced)
