@@ -476,9 +476,9 @@
 
    - Controllers
      
-      - Всички контролери трябва да се намират в папката "Controllers"
-      - Стандартът за именуване на контролери трябва да бъде {име}Controller
-      - Всеки контролер трябва да наследява класа Controller
+      - Всички контролери трябва да се намират в папката "Controllers" <br/>
+      - Стандартът за именуване на контролери трябва да бъде {име}Controller <br/>
+      - Всеки контролер трябва да наследява класа Controller <br/>
      
          - Достъп до Request, Response, HttpContext, RouteData, TempData и други
         
@@ -486,38 +486,40 @@
 
    - Actions
 
-     - Actions обикновено връщат IActionResult
-     - Action result = отговорът на контролера на заявката от браузъра
+     - Actions обикновено връщат IActionResult <br/>
+     - Action result = отговорът на контролера на заявката от браузъра <br/>
 
-          - Представляват различни HTTP статус кодове
-          - Наследяват базовия клас ActionResult
+          - Представляват различни HTTP статус кодове <br/>
+          - Наследяват базовия клас ActionResult <br/>
 
    - Action Selectors
   
-      - ActionName(string name)
-      - AcceptVerbs
+      - ActionName(string name) <br/>
+      - AcceptVerbs <br/>
         
-         - HttpPost
-         - HttpGet
-         - HttpDelete
-         - HttpOptions
+         - HttpPost <br/>
+         - HttpGet <br/>
+         - HttpDelete <br/>
+         - HttpOptions <br/>
            
-      - NonAction
-      - RequireHttps
+      - NonAction <br/>
+      - RequireHttps <br/>
         
       - пример:
-        
-         public class UsersController : Controller
-         { 
-             [ActionName("UserLogin")]
-             [HttpPost]
-             [RequireHttps]
-             public IActionResult Login(
-                  string username, string password)
-             {
-                return Content("Logged in!");
-             }
+        <br/>
+    ```csharp
+         public class UsersController : Controller 
+         {  
+             [ActionName("UserLogin")] 
+             [HttpPost] 
+             [RequireHttps] 
+             public IActionResult Login( 
+                  string username, string password) 
+             { 
+                return Content("Logged in!"); 
+             } 
          }
+    ```
 
      - Action Parameters
     
@@ -532,20 +534,133 @@
                - /Users/ByUsername?username=NikolayIT
                  
             - HTTP post data can also contain parameters
+
+4. Views and Razor View Engine
+
+   - Изгледите генерират HTML код за извиканото действие
+     
+   - Стандартът за именуване на изгледите е {ИмеНаДействието}.cshtml
+     
+   - Изгледите трябва да се поместват в папка "/Views/{ИмеНаКонтролер}"
+
+   - Най-популярният view engine е Razor View Engine
+
+   -  With ViewBag (dynamic type):
+     
+      - Action: ViewBag.Message = "Hello!"; <br/>
+      - View: @ViewBag.Message <br/>
       
+   - With ViewData (dictionary):
+     
+      - Action: ViewData["message"] = "Hello!"; <br/>
+      - View: @ViewData["message"] <br/>
 
+   - The @model directive makes the model available to the view - @model CustomerViewModel
 
+5. ASP.NET Core MVC Routing
 
+   - ASP.NET Core MVC Routing е механизъм за определяне на това как URL адреси се съпоставят с действията на контролерите в уеб приложението
+     
+   - ASP.NET Core MVC използва middleware за маршрутизация на клиентски заявки
+  
+   - Routes describe how request URL paths should be mapped to Controller Actions
 
+        - Conventional Routing (Used by Default)
 
+          routes.MapControllerRoute( <br/>
+             name: "default", <br/>
+             template: "{controller=Home}/{action=Index}/{id?}" <br/>
+          ); <br/>
 
+          - Will match a route like "/Cats/Show/1" <br/>
+          - Will extract the route values <br/>
+            
+               { <br/>
+                  controller = "Cats", <br/>
+                  action = "Show", <br/>
+                  id = "1" <br/>
+               } <br/>
 
+6. Static Files
 
+   - Статичните файлове (static files) в уеб разработката се отнасят до файлове като HTML, CSS, JavaScript, изображения и други ресурси, които се обслужват направо от уеб сървъра на клиентския браузър без да претърпяват промени от страна на уеб приложението.
+       
+          app.UseStaticFiles(); - This will tell the ASP.NET Core App to serve the static files in the "wwwroot" directory
 
+7. Dependency Injection
 
+   - Dependency injection injects objects at runtime
+     
+      - Регистрирате определен клас услуга в класа Program
+        
+           services.AddTransient<DataService>();
+     
+      - По-късно внедрявате регистрирания клас във вашите контролери
+      - 
+        <br/>
+    ```csharp
+            public class ProductController : Controller
+            {
+               public ProductController(DataService ds) {
+                  // Use the injected object "ds"
+               }
+            }
+    ```
+    
+8. Model Binding
 
+   - Model binding в ASP.NET Core MVC е процесът, чрез който фреймуъркът автоматично свързва данни от HTTP заявки към параметрите на методите за действия (actions) в контролерите. 
 
+      https://mysite.com/posts/edit/6 --> public IActionResult Edit(int? id)
 
+   - Model binding can look through several data sources per Request
+     
+      - Form values – POST Request parameters <br/>
+      - Route values – The set of Route values provided by the Routing <br/>
+      - Query strings – The query string parameters in the URL <br/>
+      - Even in headers, cookies, session, etc. in custom model binders <br/>
+
+      - Проверката на източниците на данни става в указания по-горе ред.
+
+   - Когато моделното свързване в ASP.NET Core MVC се провали, фреймуъркът не хвърля грешка. Вместо това:
+
+      - Всяко действие, което приема потребителски вход, трябва да провери дали свързването е успешно чрез ModelState.IsValid. <br/>
+      - Всяко вписване в ModelState на контролера е ModelStateEntry, което съдържа свойство Errors. <br/>
+      - Можете лесно да обхождате грешките в ModelState. <br/>
+      <br/>
+    ```csharp
+        public MyController : Controller
+         {
+            IActionResult Index(MyInputModel input)
+            {
+                 if (ModelState.IsValid)
+                 {
+                     return View();
+                 }
+            }
+         }
+    ```
+
+9. Model Validation
+
+   - .NET ни предоставя абстрактно валидиране чрез атрибути:
+
+      - Някои атрибути конфигурират валидирането на модела чрез ограничения подобно на валидирането на полета в базата данни. <br/>
+      - Други прилагат шаблони към данните, за да наложат бизнес правила (кредитни карти, телефонни номера, имейл адреси и т.н.) <br/>
+
+   - Attribute Description
+
+      - [CreditCard]______________Validates the property has a credit card format <br/>
+      - [Compare] ________________ Validates 2 properties in a model match. (Useful for password confirmation) <br/>
+      - [EmailAddress] ___________ Validates the property has an email format <br/>
+      - [Phone] __________________ Validates the property has a telephone format <br/>
+      - [Range] __________________ Validates the property value falls within the given range <br/>
+      - [RegularExpression] ______ Validates the data matches the specified regular expression <br/>
+      - [Required] _______________ Makes the property required. Value cannot be null <br/>
+      - [StringLength] ___________ Validates that a string property has at most the given maximum length <br/>
+      - [Url] ____________________ Validates the property has a URL format <br/>
+
+     
 
 
 
