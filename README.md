@@ -705,7 +705,7 @@
 
    - Свойства на DbContext
      
-      - База данни – методи EnsureCreated/Deleted, връзка с базата данни
+      - База данни – методи EnsureCreated/Deleted, връзка с базата данни <br/>
       - ChangeTracker – съдържа информация за automatic change tracker<br/>
         <br/>
      
@@ -737,6 +737,7 @@
       Install-Package Microsoft.EntityFrameworkCore
       + Microsoft.EntityFrameworkCore.SqlServer
       + Microsoft.EntityFrameworkCore.Design
+      + Microsoft.EntityFrameworkCore.Tools //миграциите
 
    - In ASP.NET Core connection string is in the appsettings.json file and has the following properties
 
@@ -765,6 +766,45 @@
                            x => x.UseSqlServer(connectionString));
        
         ```
+
+   - Database.EnsureCreated()
+
+      - Когато създадете DB контекста, можете да използвате Database.EnsureCreated():
+
+         - Това ще създаде DB и схемата, ако DB липсва.
+
+      - EnsureCreated() не използва миграции → трябва да изтриете целия DB, когато променяте схемата на DB.
+
+5. Database Migrations
+
+   - автоматизиран процес за управление на промените в схемата на база данни. 
+
+   - за да добавим Миграция, използвайки the Package Manager Console
+     
+              Add-Migration {MigrationName}
+   
+   - за да я изтрием
+     
+              Remove-Migration
+
+   - за да комитнем промените
+  
+              Update-Database
+
+   - db.Database.Migrate();
+  
+        - Когато извикаме db.Database.Migrate() в Entity Framework Core:
+
+            - Проверява съществуването на базата данни.
+            - Прилага всички миграции, които са създадени за текущия модел на данните.
+            - Ако базата данни не съществува, създава я и прилага всички миграции.
+
+
+
+
+
+
+
 
 
 
