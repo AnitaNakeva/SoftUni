@@ -216,77 +216,113 @@
 1. HTTP Cookies <br/>
 
    - HTTP бисквитките са малки парчета данни, които се изпращат от уебсайт и се съхраняват на устройството на потребителя, докато той разглежда уебсайта. Бисквитките се използват за запомняне на информация за потребителя и неговата дейност в мрежата, които могат да бъдат използвани от уебсайта при следващо посещение <br/>
-      -Управление на сесии: влизания, колички за пазаруване, резултати от игри или нещо друго, което сървърът трябва да запомни <br/>
-      -Персонализация: потребителски предпочитания, теми и други потребителски настройки <br/>
-      -Проследяване: записване и анализиране на поведението на потребителите <br/>
+   
+      - Управление на сесии: влизания, колички за пазаруване, резултати от игри или нещо друго, което сървърът трябва да запомни <br/>
+      - Персонализация: потребителски предпочитания, теми и други потребителски настройки <br/>
+      - Проследяване: записване и анализиране на поведението на потребителите <br/>
+      
    - The HTTP object is stateless <br/>
-      ▪ It doesn't store information about the requests <br/>
-      ▪ The server doesn't know if two requests come from the same client <br/>
-   в) Cookies решават този проблем, като помагат да се помни: <br/>
-      ▪ To know whether the user is logged in or not <br/>
-      ▪ To know which account the user is logged in with <br/>
-      ▪ To record the user's browsing activity <br/>
-      ▪ To remember pieces of information previously entered into form fields (usernames, passwords, etc.) <br/>
-   г) структура: <br/>
-      ▪ The cookie consists of Name, Value and Attributes (optional) <br/>
-      ▪ The attributes are key-value pairs with additional information <br/>
-      ▪ Attributes are not included in the requests <br/>
-      ▪ Attributes are used by the client to control the cookies <br/>
-                              name=value                      attributes <br/>
-         -пример: Set-Cookie: SSID=Ap4P…GTEq; Domain=foo.com; Path=/; <br/>
+   
+      - It doesn't store information about the requests <br/>
+      - The server doesn't know if two requests come from the same client <br/>
+      
+   - Cookies решават този проблем, като помагат да се помни: <br/>
+   
+      - To know whether the user is logged in or not <br/>
+      - To know which account the user is logged in with <br/>
+      - To record the user's browsing activity <br/>
+      - To remember pieces of information previously entered into form fields (usernames, passwords, etc.) <br/>
+      
+   - структура: <br/>
+   
+      - The cookie consists of Name, Value and Attributes (optional) <br/>
+      - The attributes are key-value pairs with additional information <br/>
+      - Attributes are not included in the requests <br/>
+      - Attributes are used by the client to control the cookies <br/>
+      
+         - ...............................................name=value...................................attributes <br/>
+         - пример: Set-Cookie: SSID=Ap4P…GTEq; Domain=foo.com; Path=/; <br/>
                   Expires=Wed, 13 Jan 2021 22:23:01 GMT; Secure; HttpOnly <br/>
-         -Domain – defines the website that the cookie belongs to <br/>
-         -Path – Indicates a URL path that must exist in the requested resource before sending the Cookie header <br/>
-         -Expires - the lifetime (or we could use Max-Age) <br/>
-         -Secure - tells the browser to use cookies only via secure/encrypted connections <br/>
-         -HttpOnly – defines that the cookie cannot be accessed via client-side scripting languages <br/>
-   д) Third Party Cookies <br/>
-         ▪ Cookies stored by an external party (different domain) <br/>
-         ▪ Mainly used for advertising and tracking across the web <br/>
+         - Domain – defines the website that the cookie belongs to <br/>
+         - Path – Indicates a URL path that must exist in the requested resource before sending the Cookie header <br/>
+         - Expires - the lifetime (or we could use Max-Age) <br/>
+         - Secure - tells the browser to use cookies only via secure/encrypted connections <br/>
+         - HttpOnly – defines that the cookie cannot be accessed via client-side scripting languages <br/>
+         
+   - Third Party Cookies <br/>
+   
+      - Cookies stored by an external party (different domain) <br/>
+      - Mainly used for advertising and tracking across the web <br/>
 
 2. Sessions <br/>
-   a) Сесиите в уеб програмирането са периоди на активно взаимодействие между потребител и уебсайт <br/>
-   б) Те обикновено започват, когато потребителят отвори уебсайт или приложение и продължават, докато той остане активен на уебсайта, обикновено с определен период на неактивност <br/>
-   в) В рамките на една сесия уебсайтът запомня данни за потребителя, като например входни данни, предпочитания и други информации, които се използват през целия период на сесията <br/>
-   г) Когато потребителят затвори браузъра си или се откаже от сесията, тя приключва <br/>
-   г) Важно е да се отбележи, че сесиите могат да се управляват чрез HTTP бисквитки или други методи за запазване на състоянието (state) на потребителя <br/>
+
+   - Сесиите в уеб програмирането са периоди на активно взаимодействие между потребител и уебсайт <br/>
+   
+   - Те обикновено започват, когато потребителят отвори уебсайт или приложение и продължават, докато той остане активен на уебсайта, обикновено с определен период на неактивност <br/>
+   
+   - В рамките на една сесия уебсайтът запомня данни за потребителя, като например входни данни, предпочитания и други информации, които се използват през целия период на сесията <br/>
+   
+   - Когато потребителят затвори браузъра си или се откаже от сесията, тя приключва <br/>
+   
+   - Важно е да се отбележи, че сесиите могат да се управляват чрез HTTP бисквитки или други методи за запазване на състоянието (state) на потребителя <br/>
 
 3. Session Vs Cookies <br/>
-   a) session: Stored on the server <br/>
-      cookies: Stored on the user's computer as a text file <br/>
+
+   - session: Stored on the server <br/>
+     cookies: Stored on the user's computer as a text file <br/>
     <br/>
-   б) session: Expires when the user closes the browser <br/>
-      cookies: Expires on its expiration date <br/>
+    
+   - session: Expires when the user closes the browser <br/>
+     cookies: Expires on its expiration date <br/>
     <br/>
-   в) session: It can store an unlimited amount of data <br/>
-      cookies: It can store only limited data <br/>
+    
+   - session: It can store an unlimited amount of data <br/>
+     cookies: It can store only limited data <br/>
     <br/>
-   г) session: Depends on the cookie <br/>
-      cookies: Does not depend on the session <br/>
+    
+   - session: Depends on the cookie <br/>
+     cookies: Does not depend on the session <br/>
     <br/>
-   д) session: Secure – saves data in encrypted form and cannot be accessed by anyone easy <br/>
-      cookies: Have security issues, as data is stored in a text file and it can be accessed by anyone easily <br/>
+    
+   - session: Secure – saves data in encrypted form and cannot be accessed by anyone easy <br/>
+     cookies: Have security issues, as data is stored in a text file and it can be accessed by anyone easily <br/>
 
 4. Синхронно програмиране <br/>
-   а) Синхронното програмиране е начин за изпълнение на код, където всеки ред от кода се изпълнява последователно, един след друг <br/>
-   б) Когато се извиква функция или операция, програмата чака да приключи изпълнението й, преди да продължи напред <br/>
-   в) Програмните ресурси са достъпни във всички точки <br/>
+
+   - Синхронното програмиране е начин за изпълнение на код, където всеки ред от кода се изпълнява последователно, един след друг <br/>
+   
+   - Когато се извиква функция или операция, програмата чака да приключи изпълнението й, преди да продължи напред <br/>
+   
+   - Програмните ресурси са достъпни във всички точки <br/>
 
 5. Асинхронно програмиране  <br/>
-   а) Асинхронното програмиране е начин за изпълнение на код, при който програмата не чака завършването на определена операция, преди да продължи напред <br/>
-   б) Вместо това, програмата продължава да изпълнява други задачи, докато изчаква завършването на тази операция <br/>
-   в) Независимите компоненти не чакат един-друг <br/>
-   г) Програмни ресурси, споделени между нишките <br/>
-      -ако една нишка(thread) използва ресурси, други не трябва да ги използват <br/>
-   д) по-трудно за дебъгване <br/>
+
+   - Асинхронното програмиране е начин за изпълнение на код, при който програмата не чака завършването на определена операция, преди да продължи напред <br/>
+   
+   - Вместо това, програмата продължава да изпълнява други задачи, докато изчаква завършването на тази операция <br/>
+   
+   - Независимите компоненти не чакат един-друг <br/>
+   
+   - Програмни ресурси, споделени между нишките <br/>
+   
+      - ако една нишка(thread) използва ресурси, други не трябва да ги използват <br/>
+      
+   - по-трудно за дебъгване <br/>
 
 6. Threads <br/>
-   a) Thread (нишка) е независима пътека на изпълнение в рамките на една програма <br/>
-   б) Всяка нишка представлява отделен поток на изпълнение, който може да изпълнява инструкции паралелно с други нишки в същата програма <br/>
-   в) Използването на нишки позволява на програмата да изпълнява няколко задачи едновременно, което може да подобри ефективността и отзивчивостта й <br/>
-   г) Нишките споделят общи ресурси като паметта и файловете, което позволява лесното им комуникиране помежду си <br/>
-   д) Threads in C# can be created using the System.Thread class <br/>
-      -Constructor accepts a method (delegate) to execute on a separate thread: <br/>
+
+   - Thread (нишка) е независима пътека на изпълнение в рамките на една програма <br/>
+   
+   - Всяка нишка представлява отделен поток на изпълнение, който може да изпълнява инструкции паралелно с други нишки в същата програма <br/>
+   
+   - Използването на нишки позволява на програмата да изпълнява няколко задачи едновременно, което може да подобри ефективността и отзивчивостта й <br/>
+   
+   - Нишките споделят общи ресурси като паметта и файловете, което позволява лесното им комуникиране помежду си <br/>
+   
+   - Threads in C# can be created using the System.Thread class <br/>
+   
+      - Constructor accepts a method (delegate) to execute on a separate thread: <br/>
+      
          пример:  <br/>
          Thread thread = new Thread(() => <br/>
          { <br/>
@@ -295,14 +331,21 @@
                Console.WriteLine(i); <br/>
             } <br/>
          }); <br/>
-   е) команди: <br/>
-      ▪ Start() – schedules the thread for execution <br/>
-      ▪ Join() – waits for the thread to finish its work (blocks the calling thread) <br/>
-   ж) Each thread has its own stack <br/>
-   з) A race condition occurs when two or more threads access shared data and they try to change it at the same time <br/>
-   и) lock keyword grants access to only one thread at a time <br/>
-      ▪ Avoids race conditions <br/>
-      ▪ Blocks any other threads until the lock is released <br/>
+         
+   - команди: <br/>
+   
+      - Start() – schedules the thread for execution <br/>
+      - Join() – waits for the thread to finish its work (blocks the calling thread) <br/>
+      
+   - Each thread has its own stack <br/>
+   
+   - A race condition occurs when two or more threads access shared data and they try to change it at the same time <br/>
+   
+   - lock keyword grants access to only one thread at a time <br/>
+   
+      - Avoids race conditions <br/>
+      - Blocks any other threads until the lock is released <br/>
+      
          пример: <br/>
          lock (numbers) // <- референтен тип <br/>
          { <br/>
@@ -310,29 +353,45 @@
             int lastIndex = numbers.Count - 1; <br/>
             numbers.RemoveAt(lastIndex); <br/>
          } <br/>
-   й) Exceptions cannot be handled outside a thread!! <br/>
+         
+   - Exceptions cannot be handled outside a thread!! <br/>
    
 7. Tasks <br/>
-      а) Работи успоредно с основната нишка <br/>
-      б) Може да не се изпълнява на нова нишка (CLR решава) <br/>
-      в) Предлага няколко операции <br/>
-         ▪ Създаване, изпълнение и връщане на резултат <br/>
-         ▪ Продължаване с друга задача (свързване на няколко операции) <br/>
-         ▪ Правилна обработка на изключенията <br/>
-         ▪ Доклади за напредъка/състоянието <br/>
-      г) инициализиране -> Task task = new Task(() => { Console.WriteLine(""); }); <br/>
-                           Task.Run(() => TraverseMatrix()); <br/>
-         -Task.Factory.StartNew() – enables additional task customization <br/>
-                           Task.Factory.StartNew(() => CopyFileContents("got-s03ep1.avi"), TaskCreationOptions.LongRunning); <br/>
-      д) Task<T> is a task that will return a result sometime in the future <br/>
-      е) Exceptions that have occurred within the body of a Task can be captured and handled outside of it <br/>
+
+      - Работи успоредно с основната нишка <br/>
+      
+      - Може да не се изпълнява на нова нишка (CLR решава) <br/>
+      
+      - Предлага няколко операции <br/>
+      
+         - Създаване, изпълнение и връщане на резултат <br/>
+         - Продължаване с друга задача (свързване на няколко операции) <br/>
+         - Правилна обработка на изключенията <br/>
+         - Доклади за напредъка/състоянието <br/>
+         
+      - инициализиране -> Task task = new Task(() => { Console.WriteLine(""); }); <br/>
+      
+        ..............................................Task.Run(() => TraverseMatrix()); <br/>
+                          
+         - Task.Factory.StartNew() – enables additional task customization <br/>
+         
+           Task.Factory.StartNew(() => CopyFileContents("got-s03ep1.avi"), TaskCreationOptions.LongRunning); <br/>
+                           
+      - Task<T> is a task that will return a result sometime in the future <br/>
+      
+      - Exceptions that have occurred within the body of a Task can be captured and handled outside of it <br/>
 
 8. Async and Await <br/>
-      a) async - използва се за дефиниране на метод, който може да бъде изпълнен асинхронно <br/>
-      б) await - използва се за изчакване на завършването на асинхронна операция, без да блокира основния поток на изпълнение <br/>
-      в) С тях можем да пишем код, който изглежда синхронен, но използва асинхронни операции. Това прави кода по-четим и по-лесен за поддръжка, като същевременно подобрява отзивчивостта на приложението <br/>
-      г) If it starts waiting, return to the calling method <br/>
-         -When the wait is over, go back to called method <br/>
+
+      - async - използва се за дефиниране на метод, който може да бъде изпълнен асинхронно <br/>
+      
+      - await - използва се за изчакване на завършването на асинхронна операция, без да блокира основния поток на изпълнение <br/>
+      
+      - С тях можем да пишем код, който изглежда синхронен, но използва асинхронни операции. Това прави кода по-четим и по-лесен за поддръжка, като същевременно подобрява отзивчивостта на приложението <br/>
+      
+      - If it starts waiting, return to the calling method <br/>
+      
+         - When the wait is over, go back to called method <br/>
 
 
 
