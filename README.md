@@ -507,19 +507,19 @@
         
       - пример:
         <br/>
-    ```csharp
-         public class UsersController : Controller 
-         {  
-             [ActionName("UserLogin")] 
-             [HttpPost] 
-             [RequireHttps] 
-             public IActionResult Login( 
-                  string username, string password) 
-             { 
-                return Content("Logged in!"); 
-             } 
-         }
-    ```
+       ```csharp
+            public class UsersController : Controller 
+            {  
+                [ActionName("UserLogin")] 
+                [HttpPost] 
+                [RequireHttps] 
+                public IActionResult Login( 
+                     string username, string password) 
+                { 
+                   return Content("Logged in!"); 
+                } 
+            }
+       ```
 
      - Action Parameters
     
@@ -595,17 +595,16 @@
         
            services.AddTransient<DataService>();
      
-      - По-късно внедрявате регистрирания клас във вашите контролери
-      - 
-        <br/>
-    ```csharp
-            public class ProductController : Controller
-            {
-               public ProductController(DataService ds) {
-                  // Use the injected object "ds"
+      - По-късно внедрявате регистрирания клас във вашите контролери<br/>
+        
+       ```csharp
+               public class ProductController : Controller
+               {
+                  public ProductController(DataService ds) {
+                     // Use the injected object "ds"
+                  }
                }
-            }
-    ```
+       ```
     
 8. Model Binding
 
@@ -660,17 +659,112 @@
       - [StringLength] ___________ Validates that a string property has at most the given maximum length <br/>
       - [Url] ____________________ Validates the property has a URL format <br/>
 
+
+   -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   <br/>
+
+## ASP.NET Core Databases
+
+1. Entity Framework Core: Overview
+
+   - Entity Framework (EF) е стандартният ORM (обектно-релационен модел) фреймуърк за .NET.
      
+   - Той предлага:
 
+      - Запитвания и операции с данни
+        
+         - Използва LINQ за извършване на заявки и CRUD (създаване, четене, актуализиране, изтриване) операции.
+           
+      - Автоматично проследяване на промени
+        
+         - Следи автоматично промените в обектите в паметта.
+           
+      - Поддръжка на различни бази данни
+        
+         - Работи с много релационни бази данни чрез различни доставчици.
+           
+      - Отворен код
+        
+         - Е отворен код и има независим цикъл на издаване.
+        
+   - Тези характеристики правят EF мощен инструмент за работа с бази данни в .NET приложения.
 
+2. Code First Approach
 
+   - "Code First" означава първо да напишете .NET класовете, а след това Entity Framework Core (EF Core) да създаде базата данни въз основа на тези класове и техните връзки.
 
+3. DbContext
+   
+   - Класът DbContext в Entity Framework Core представлява централната част от взаимодействието с базата данни в приложенията на .NET.
+   
+   - Той управлява моделните класове чрез DbSet<T>, позволява лесна навигация и операции с релации, управлява създаването и изтриването на бази данни, изпълнява LINQ заявки като SQL и поддържа проследяване на промените.
 
+   - пример:
 
+     public class ShoppingListDbContext : DbContext
 
+   - Свойства на DbContext
+     
+      - База данни – методи EnsureCreated/Deleted, връзка с базата данни
+      - ChangeTracker – съдържа информация за automatic change tracker<br/>
+        <br/>
+     
+       ```csharp
+            using Microsoft.EntityFrameworkCore;
+            public class ShoppingListDbContext : DbContext
+            {
+                  public ShoppingListDbContext
+                         (DbContextOptions<ShoppingListDbContext> options)
+                                : base(options)
+                                => Database.EnsureCreated();
+       
+                  public DbSet<Product> Products { get; set; }
+                  public DbSet<ProductNote> ProductNotes { get; set; }
+       
+                  protected override void OnModelCreating(ModelBuilder builder)
+                  {
+                        builder.Entity<Product>()
+                            .HasMany(p => p.ProductNotes)
+                            .WithOne(r => r.Product);
+                  }
+            }
+       ```
 
+4. EF Core Configuration
 
+   - трябва да се инсталират:
+  
+      Install-Package Microsoft.EntityFrameworkCore
+      + Microsoft.EntityFrameworkCore.SqlServer
+      + Microsoft.EntityFrameworkCore.Design
 
+   - In ASP.NET Core connection string is in the appsettings.json file and has the following properties
+
+   
+      ```cs
+     
+      "ConnectionStrings": {
+            "DefaultConnection": "Server=(localdb)\\mssqllocaldb;
+                        Database=ShoppingList;Trusted_Connection=True;
+                        MultipleActiveResultSets=true"}
+     
+      ```
+
+   - Use the DbContext and tell it to use SQL with the connection string in the Program class
+
+  
+       ```csharp
+   
+            var connectionString = builder
+                  .Configuration
+                  .GetConnectionString("DefaultConnection");
+   
+            builder
+                  .Services
+                  .AddDbContext<ShoppingListDbContext>(
+                           x => x.UseSqlServer(connectionString));
+       
+        ```
 
 
 
