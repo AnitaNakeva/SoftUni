@@ -839,7 +839,48 @@
       - Изпълнение на специфични команди или функции
       - Достъп до определени части на приложението
 
+3. ASP.NET Identity
 
+   -  ASP.NET Core Identity е система за удостоверяване и авторизация, която предоставя инфраструктура за управление на потребители, роли и права в уеб приложенията, базирани на ASP.NET Core.
+  
+   -  Удостоверяване(Authentication) и Авторизация (Authorization).
+  
+   -  Поддържа ASP.NET Core MVC, Razor Pages, Web API (с JWT токени), SignalR и други.
+  
+   -  Позволява създаване, управление и поддръжка на потребители, включително техните профили и управлението на роли и права на достъп за различни потребителски групи.
 
+   - Вграден механизъм за управление на съгласие за използване на бисквитки, съобразен с изискванията на GDPR (Общ регламент за защита на данните).
+  
+   - Поддържа интеграция с външни доставчици за вход като Facebook, Google, Twitter и други, което улеснява потребителите да се логват с вече съществуващи акаунти.
+  
+   - Позволява съхраняване на потребителските данни в различни типове бази данни, включително SQL Server, Azure, Active Directory, Windows Users и други.
+  
+   - Required NuGet package
+     
+      - Microsoft.AspNetCore.Identity.EntityFrameworkCore
 
+   - Password settings – can be defined in Program.cs
+     
+      ```csharp
+
+         builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+         {
+            // Password, lockout, emails, etc.
+            options.SignIn.RequireConfirmedAccount = false;
+            options.Password.RequireDigit = false;
+         })
+         .AddEntityFrameworkStores<ApplicationDbContext>();
+
+         ```
+
+   - Use the [Authorize] and [AllowAnonymous] attributes to configure Authorized / Anonymous access for Controller / Action
+
+      ```csharp
+      
+            var currentUser = await userManager.GetUserAsync(this.User);
+            var currentUserUsername = await userManager.GetUserNameAsync(currentUser);
+            var currentUserId = await userManager.GetUserIdAsync(currentUser);
+            var roles = await userManager.GetRolesAsync(currentUser);
+
+         ```
 
