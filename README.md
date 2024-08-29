@@ -890,7 +890,43 @@
  
 ## Routing and Binding, Views, DI and Services
 
-1. Model Binding Overview
+1. Маршрутизация (Routing)
+
+   - процесът на съпоставяне на URL адреси към определени действия в контролерите на ASP.NET Core MVC приложението.
+  
+   - Конвенционална маршрутизация (Conventional Routing)
+     
+        - В Startup.cs файлът на приложението (по-конкретно в метода Configure), маршрутите обикновено се дефинират чрез метода UseEndpoints
+          
+          ```csharp
+             endpoints.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+                ```
+
+   - Атрибутна маршрутизация (Attribute Routing):ю
+     
+        - Позволява задаването на маршрути директно в контролерите и техните действия с помощта на атрибути.
+  
+          ```csharp
+             [Route("products/{id}")]
+               public IActionResult GetProduct(int id) {
+                   // Логика за връщане на продукт по ID
+               }
+              ```
+             
+   - Статични файлове и маршрутизация
+
+     - За достъп до статични файлове (като CSS, изображения, JavaScript) се използва UseStaticFiles
+  
+           ```csharp
+             app.UseStaticFiles(new StaticFileOptions {
+                   FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "MyStaticFiles")),
+                   RequestPath = "/StaticFiles"
+               });
+                ```
+     
+3. Model Binding Overview
    
    - Model Binding в ASP.NET е процес, който автоматично свързва данните от HTTP заявките (като тези от формуляри, URL параметри или query strings) с параметрите на метода в контролера или със свойствата на модела (обект).
   
@@ -916,48 +952,73 @@
 
    - За да създадеш Model Binding, трябва да направиш два класа: един, който ще служи като свързвач (Binder), и един, който ще осигури този свързвач (BindingProvider).
 
-2. Model Validation
+4. Model Validation
 
-  - Model Validation е процесът на проверка на данните, които са свързани с модела в ASP.NET приложения. Това гарантира, че данните отговарят на определени правила и изисквания, преди да бъдат използвани в приложението.
+   - процес, при който се проверява дали данните, подадени от потребителя или получени от външни източници, отговарят на определени правила и условия, преди да бъдат използвани в приложението. 
 
-  - Валидирането на модел се извършва след свързването на модел
+   - Валидирането на модел се извършва след свързването на модел
        - Първо данните от заявката се свързват с модела чрез процеса на Model Binding. След това тези данни се валидират, за да се увери, че отговарят на необходимите условия.
    
-  - Два типа валидация:
+   - Два типа валидация:
 
        - Client-side (Клиентска валидация):
-            - Валидацията се извършва на клиента (в браузъра) преди данните да бъдат изпратени на сървъра. Това предоставя на потребителя незабавна обратна връзка за грешките, което подобрява потребителското изживяване.
+         
+         - Валидацията се извършва на клиента (в браузъра) преди данните да бъдат изпратени на сървъра. Това предоставя на потребителя незабавна обратна връзка за грешките, което подобрява потребителското изживяване.
 
        - Server-side (Сървърна валидация):
-            - Валидацията се извършва на сървъра, когато данните се изпратят от клиента. Това гарантира, че данните са валидни, независимо от действията на потребителя. Сървърната валидация е задължителна, защото клиентската валидация може да бъде заобиколена.
+         
+         - Валидацията се извършва на сървъра, когато данните се изпратят от клиента. Това гарантира, че данните са валидни, независимо от действията на потребителя. Сървърната валидация е задължителна, защото клиентската валидация може да бъде заобиколена.
         
-        - Свойството ModelState.IsValid показва дали валидацията на модела е успешна
-             - В контролера можеш да провериш ModelState.IsValid, за да видиш дали моделът е преминал успешно валидацията. Ако не е, можеш да върнеш грешки или да покажеш съобщения на потребителя.
+  - Свойството ModelState.IsValid показва дали валидацията на модела е успешна
+    
+      - В контролера можеш да провериш ModelState.IsValid, за да видиш дали моделът е преминал успешно валидацията. Ако не е, можеш да върнеш грешки или да покажеш съобщения на потребителя.
    
-  - Можеш да създадеш собствени атрибути за валидация:
+  - Можете да създадете собствени атрибути за валидация:
 
        ```csharp
-            public class IsBefore : ValidationAttribute
-            {
-            private const string DateTimeFormat = "dd/MM/yyyy";
-            private readonly DateTime date;
-            public IsBefore(string dateInput)
-            {
-            date = DateTime.ParseExact(dateInput, DateTimeFormat, CultureInfo.InvariantCulture);
-            }
-            protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-            {
-            if ((DateTime)value >= date) return new ValidationResult(ErrorMessage);
-            return ValidationResult.Success;
-            }
-            }
-
-          ```
-       - после в модела:
-             [IsBefore("01/01/2000")]
+             public class IsBeforeAttribute : ValidationAttribute {
+             private readonly DateTime _date;
+         
+             public IsBeforeAttribute(string date) {
+                 _date = DateTime.Parse(date);
+             }
+         
+             protected override ValidationResult IsValid(object value, ValidationContext validationContext) {
+                 var dateValue = (DateTime)value;
+                 if (dateValue >= _date) {
+                     return new ValidationResult($"Date must be before {_date.ToShortDateString()}");
+                 }
+                 return ValidationResult.Success;
+             }
+         }
+         
+         public class UserModel {
+             [IsBefore("01/01/2000", ErrorMessage = "Birth date must be before January 1st, 2000")]
              public DateTime BirthDate { get; set; }
+         }
+          ```
+   - Интерфейс IValidatableObject
 
+        - Ако валидирането изисква сложна логика, която не може да бъде уловена само с атрибути, можете да имплементирате интерфейса IValidatableObject в модела.
 
+       ```csharp
+          public class RegisterUserModel : IValidatableObject {
+                public string Password { get; set; }
+                public string ConfirmPassword { get; set; }
+            
+                public IEnumerable<ValidationResult> Validate(ValidationContext validationContext) {
+                    if (Password != ConfirmPassword) {
+                        yield return new ValidationResult("Passwords do not match");
+                    }
+                }
+            }
+               ```
+
+3. Работа с файлове
+
+   - Качване на файлове (Uploading Files)
+     
+      - ASP.NET Core поддържа качването на файлове чрез обвързване на модели, като предоставя възможност за качване на единични или множество файлове.
 
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
