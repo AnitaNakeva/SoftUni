@@ -1,4 +1,4 @@
-# Courses from my education at SoftUni:
+   # Courses from my education at SoftUni:
 - ### C# Web
 - ### C# OOP
 - ### JS Advanced
@@ -1189,14 +1189,13 @@
      
         - Will be applied to all Controllers and Actions
 
-         ```csharp
-     
+           ```csharp
                 builder.Services.AddMvc(options => {
                      options.Filters.Add(new SampleActionFilter()); // instant
                      options.Filters.Add(typeof(SampleActionFilter)); // by type
                      ...
                 });
-            ```
+               ```
 
     - ServiceFilterAttribute
 
@@ -1213,7 +1212,7 @@
   
         - След това използвате ServiceFilterAttribute, за да кажете на MVC да използва този филтър за конкретен контролер или действие.
   
-          ```csharp
+           ```csharp
                [ServiceFilter(typeof(MyServiceFilter))]
                public class MyController : Controller
                {
@@ -1230,7 +1229,7 @@
       
         - Създавате филтър, който може да приема параметри чрез конструктора си.
 
-         ```csharp
+          ```csharp
           [TypeFilter(typeof(MyTypeFilter), Arguments = new object[] { "MyValue" })]
             public class MyController : Controller
             {
