@@ -1074,23 +1074,23 @@
                          Layout = "_Layout";
                         } (Всеки изглед в тази папка автоматично ще използва _Layout.cshtml, освен ако не бъде указано друго.)
 
-         - _ViewImports.cshtml
+       - _ViewImports.cshtml
 
-              - Файлът _ViewImports.cshtml също се намира в директорията Views и служи за импорт на общи namespaces, tag helpers и други настройки за всички изгледи.
+            - Файлът _ViewImports.cshtml също се намира в директорията Views и служи за импорт на общи namespaces, tag helpers и други настройки за всички изгледи.
 
-         - _ValidationScriptsPartial.cshtml
+       - _ValidationScriptsPartial.cshtml
 
-              - Обикновено се намира в папката Views/Shared.
+           - Обикновено се намира в папката Views/Shared.
 
-              - Файлът _ValidationScriptsPartial.cshtml е частичен изглед (partial view) в ASP.NET Core, който съдържа JavaScript кодове, свързани с клиентската валидация на формуляри. Този файл обикновено се използва за добавяне на скриптове за валидиране към формулярите в уеб приложението, без да е необходимо да ги добавяте ръчно във всеки изглед.
+           - Файлът _ValidationScriptsPartial.cshtml е частичен изглед (partial view) в ASP.NET Core, който съдържа JavaScript кодове, свързани с клиентската валидация на формуляри. Този файл обикновено се използва за добавяне на скриптове за валидиране към формулярите в уеб приложението, без да е необходимо да ги добавяте ръчно във всеки изглед.
 
-              - Често _ValidationScriptsPartial.cshtml се включва в секция Scripts на изгледите, за да се осигури, че скриптовете за валидация са заредени, когато страницата се рендира.
+            - Често _ValidationScriptsPartial.cshtml се включва в секция Scripts на изгледите, за да се осигури, че скриптовете за валидация са заредени, когато страницата се рендира.
 
                        @section Scripts {
                                    <partial name="_ValidationScriptsPartial" />
                                 }
 
-                 - asp-for и asp-validation-for таг хелпъри автоматично генерират HTML код, който включва правилните атрибути за валидация.
+            - asp-for и asp-validation-for таг хелпъри автоматично генерират HTML код, който включва правилните атрибути за валидация.
 
                        <label asp-for="Name"></label>
                        <input asp-for="Name" />
