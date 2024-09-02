@@ -7,6 +7,7 @@
 
 <br/>
 
+
 # Plans (from C# Web):
 
 ## Internet Explained
@@ -664,6 +665,8 @@
    <br/>
 
 ## ASP.NET Core Databases
+
+Connection string: Server=(localdb)\\mssqllocaldb;Database=DbName;Trusted_Connection=True;MultipleActiveResultSets=true
 
 1. Entity Framework Core: Overview
 
