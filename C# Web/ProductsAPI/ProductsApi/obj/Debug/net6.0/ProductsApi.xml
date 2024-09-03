@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ProductsApi</name>
+    </assembly>
+    <members>
+        <member name="M:ProductsApi.Controllers.ProductsController.GetProducts">
+            <summary>
+            Gets a list with all products.
+            </summary>
+            <remarks>
+            Sample request:
+            
+                GET /api/aproducts
+                {
+                
+                }
+            </remarks>
+            <response code="200">Returns "OK" with a list of all products</response>
+        </member>
+        <member name="M:ProductsApi.Controllers.ProductsController.GetProduct(System.Int32)">
+            <summary>
+            Gets a product by id.
+            </summary>
+            <remarks>
+            Sample request:
+            
+                GET /api/aproducts/{id}
+                {
+                
+                }
+            </remarks>
+            <response code="200">Returns "OK" with a list of all products</response>
+            <response code="404">Returns "Not Found" when product with the given id does not exist</response>
+        </member>
+        <member name="M:ProductsApi.Controllers.ProductsController.PostProduct(ProductsApi.Data.Product)">
+            <summary>
+            Creates a product.
+            </summary>
+            <remarks>
+            Sample request:
+            
+                POST /api/aproducts
+                {
+                    "name":"Buba",
+                    "description":"Sladka buba"
+                }
+            </remarks>
+            <response code="201">Returns "Created" with the created product</response>
+        </member>
+        <member name="M:ProductsApi.Controllers.ProductsController.PutProduct(System.Int32,ProductsApi.Data.Product)">
+            <summary>
+            Edits a product.
+            </summary>
+            <remarks>
+            Sample request:
+            
+                PUT /api/aproducts/{id}
+                {
+                    "name":"Buba",
+                    "description":"Sladka buba"
+                }
+            </remarks>
+            <response code="204">Returns "No Context"</response>
+            <response code="400">Returns "Bad Request" when an invalid request is sent"</response>
+            <response code="404">Returns "Not Found" when product with the given id does not exist</response>
+        </member>
+        <member name="M:ProductsApi.Controllers.ProductsController.PatchProduct(System.Int32,ProductsApi.Data.Product)">
+            <summary>
+            Edits a product partially.
+            </summary>
+            <remarks>
+            Sample request:
+            
+                PATCH /api/aproducts/{id}
+                {
+                    "name":"BubaNew",
+                }
+            </remarks>
+            <response code="204">Returns "No Context"</response>
+            <response code="404">Returns "Not Found" when product with the given id does not exist</response>
+        </member>
+        <member name="M:ProductsApi.Controllers.ProductsController.DeleteProduct(System.Int32)">
+            <summary>
+            Edits a product.
+            </summary>
+            <remarks>
+            Sample request:
+            
+                DELETE /api/aproducts/{id}
+                {
+                
+                }
+            </remarks>
+            <response code="204">Returns "No Context"</response>
+            <response code="404">Returns "Not Found" when product with the given id does not exist</response>
+        </member>
+    </members>
+</doc>

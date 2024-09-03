@@ -21,10 +21,18 @@ namespace HouseRenting.Controllers
             return View(houses);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [Route("Home/Error")]
+        public IActionResult Error(int statusCode)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            switch (statusCode)
+            {
+                case 400:
+                    return View("Error400");
+                case 401:
+                    return View("Error401");
+                default:
+                    return View("Error");
+            }
         }
     }
 }

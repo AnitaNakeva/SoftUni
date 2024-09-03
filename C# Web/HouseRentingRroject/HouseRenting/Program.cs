@@ -37,11 +37,13 @@ namespace HouseRenting
 
             if (app.Environment.IsDevelopment())
             {
+                app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Home/Error"); // For handling 500 errors
+                app.UseStatusCodePagesWithReExecute("/Home/Error", "?statusCode={0}"); // For handling other status codes
                 app.UseHsts();
             }
 
