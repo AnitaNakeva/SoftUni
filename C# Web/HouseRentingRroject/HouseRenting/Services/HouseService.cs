@@ -165,7 +165,8 @@ namespace HouseRenting.Services
                 {
                     Id = x.Id,
                     Title = x.Title,
-                    ImageUrl = x.ImageUrl
+                    ImageUrl = x.ImageUrl,
+                    Address = x.Address
                 })
                 .Take(3);
         }

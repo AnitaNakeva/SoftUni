@@ -4,6 +4,8 @@ using HouseRenting.Models.Houses;
 using HouseRenting.Services.Houses.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
+using System.Reflection.Metadata.Ecma335;
 
 namespace HouseRenting.Controllers
 {
@@ -58,7 +60,7 @@ namespace HouseRenting.Controllers
             return View(myHouses);
         }
 
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int id, string information)
         {
             if(await _houses.Exists(id) == false)
             {
@@ -66,6 +68,11 @@ namespace HouseRenting.Controllers
             }
 
             var houseModel = await _houses.HouseDetailsBYId(id);
+
+            if (information != houseModel.GetInformation())
+            {
+                return BadRequest();
+            }
 
             return View(houseModel);
         }
@@ -109,7 +116,7 @@ namespace HouseRenting.Controllers
             var newHouseId = await _houses.Create(model.Title, model.Address,
                 model.Description, model.ImageUrl, model.PricePerMonth, model.CategoryId, agentId);
 
-            return RedirectToAction(nameof(Details), new { id = newHouseId });
+            return RedirectToAction(nameof(Details), new { id = newHouseId, Information = model.GetInformation() });
         }
 
         [HttpGet]
@@ -172,7 +179,7 @@ namespace HouseRenting.Controllers
             await _houses.Edit(id, house.Title, house.Address, house.Description,
                 house.ImageUrl, house.PricePerMonth, house.CategoryId);
 
-            return RedirectToAction(nameof(Details), new { id = id });
+            return RedirectToAction(nameof(Details), new { id = id, information = house.GetInformation() });
         }
 
         [HttpGet]

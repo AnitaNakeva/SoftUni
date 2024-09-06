@@ -1,7 +1,9 @@
 using HouseRenting.Contracts;
 using HouseRenting.Data;
 using HouseRenting.Services;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace HouseRenting
@@ -27,12 +29,16 @@ namespace HouseRenting
             })
                 .AddEntityFrameworkStores<HouseRentingDbContext>();
 
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+            });
 
             // Update to Scoped
             builder.Services.AddScoped<IHouseService, HouseService>();
             builder.Services.AddScoped<IAgentService, AgentService>();
-
+            builder.Services.AddTransient<IStatisticsService, StatisticsService>();
+            
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
@@ -55,8 +61,17 @@ namespace HouseRenting
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.MapDefaultControllerRoute();
-            app.MapRazorPages();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "House Details",
+                    pattern: "/House/Details/{id}/{information}",
+                    defaults: new { Controller = "House", Action = "Details" }
+                    );
+
+                app.MapDefaultControllerRoute();
+                app.MapRazorPages();
+            });
 
             app.Run();
         }
