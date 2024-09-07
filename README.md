@@ -874,7 +874,7 @@ Connection string: Server=(localdb)\\mssqllocaldb;Database=DbName;Trusted_Connec
          })
          .AddEntityFrameworkStores<ApplicationDbContext>();
 
-         ```
+         
 
    - Use the [Authorize] and [AllowAnonymous] attributes to configure Authorized / Anonymous access for Controller / Action
 
@@ -885,7 +885,7 @@ Connection string: Server=(localdb)\\mssqllocaldb;Database=DbName;Trusted_Connec
             var currentUserId = await userManager.GetUserIdAsync(currentUser);
             var roles = await userManager.GetRolesAsync(currentUser);
 
-         ```
+         
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -905,7 +905,7 @@ Connection string: Server=(localdb)\\mssqllocaldb;Database=DbName;Trusted_Connec
              endpoints.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-                ```
+                
 
    - Атрибутна маршрутизация (Attribute Routing):ю
      
@@ -916,18 +916,19 @@ Connection string: Server=(localdb)\\mssqllocaldb;Database=DbName;Trusted_Connec
                public IActionResult GetProduct(int id) {
                    // Логика за връщане на продукт по ID
                }
-              ```
+          
              
    - Статични файлове и маршрутизация
 
      - За достъп до статични файлове (като CSS, изображения, JavaScript) се използва UseStaticFiles
   
-           ```csharp
+        ```c#
              app.UseStaticFiles(new StaticFileOptions {
                    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "MyStaticFiles")),
                    RequestPath = "/StaticFiles"
                });
-                ```
+         ```
+
      
 3. Model Binding Overview
    
@@ -999,7 +1000,7 @@ Connection string: Server=(localdb)\\mssqllocaldb;Database=DbName;Trusted_Connec
              [IsBefore("01/01/2000", ErrorMessage = "Birth date must be before January 1st, 2000")]
              public DateTime BirthDate { get; set; }
          }
-          ```
+          
    - Интерфейс IValidatableObject
 
         - Ако валидирането изисква сложна логика, която не може да бъде уловена само с атрибути, можете да имплементирате интерфейса IValidatableObject в модела.
@@ -1015,7 +1016,7 @@ Connection string: Server=(localdb)\\mssqllocaldb;Database=DbName;Trusted_Connec
                     }
                 }
             }
-               ```
+       
 
 5. Работа с файлове
 
@@ -1179,7 +1180,7 @@ Connection string: Server=(localdb)\\mssqllocaldb;Database=DbName;Trusted_Connec
                 app.UseHsts();
             }
        
-             ```
+             
 
 3. Middleware
 
@@ -1269,9 +1270,8 @@ Connection string: Server=(localdb)\\mssqllocaldb;Database=DbName;Trusted_Connec
                    // Методи на контролера
                }
 
-               ```
      
-         - Този филтър се прилага на ниво контролер и улавя всички изключения, хвърлени в рамките на този контролер или неговите действия
+   - Този филтър се прилага на ниво контролер и улавя всички изключения, хвърлени в рамките на този контролер или неговите действия
 
 5. Filters
 
@@ -1400,8 +1400,8 @@ Connection string: Server=(localdb)\\mssqllocaldb;Database=DbName;Trusted_Connec
           ```
 
 
-          
-          --------------------------------------------------------------------------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
 
  <br/>
  
@@ -1598,7 +1598,7 @@ Connection string: Server=(localdb)\\mssqllocaldb;Database=DbName;Trusted_Connec
          - В RESTful услугите, всеки ресурс има уникален URI, чрез който клиентите могат да го достъпват.
 
           
-          --------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------
 
  <br/>
  
@@ -1723,7 +1723,7 @@ Connection string: Server=(localdb)\\mssqllocaldb;Database=DbName;Trusted_Connec
    - Когато уеб приложение прави заявка към ресурс на различен домейн, браузърът първо изпраща така наречената "preflight" заявка (OPTIONS заявка), за да провери дали сървърът разрешава този тип заявка от външния домейн. Сървърът отговаря със CORS заглавия, които указват дали заявката е разрешена.
 
           
-          --------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------
 
  <br/>
  
