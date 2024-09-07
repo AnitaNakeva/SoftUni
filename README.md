@@ -1345,13 +1345,15 @@ Connection string: Server=(localdb)\\mssqllocaldb;Database=DbName;Trusted_Connec
      
         - Will be applied to all Controllers and Actions
 
-           ```csharp
+          ```c#
+
                 builder.Services.AddMvc(options => {
                      options.Filters.Add(new SampleActionFilter()); // instant
                      options.Filters.Add(typeof(SampleActionFilter)); // by type
                      ...
                 });
-               ```
+          ```
+
 
     - ServiceFilterAttribute
 
@@ -1359,12 +1361,13 @@ Connection string: Server=(localdb)\\mssqllocaldb;Database=DbName;Trusted_Connec
      
         - Първо, трябва да регистрирате филтъра като услуга в DI контейнера.
 
-           ```csharp
+           ```c#
                public void ConfigureServices(IServiceCollection services)
                {
                    services.AddScoped<MyServiceFilter>(); // Регистрация на филтъра
                }
-                 ```
+             ```
+
   
         - След това използвате ServiceFilterAttribute, за да кажете на MVC да използва този филтър за конкретен контролер или действие.
   
@@ -1385,7 +1388,7 @@ Connection string: Server=(localdb)\\mssqllocaldb;Database=DbName;Trusted_Connec
       
         - Създавате филтър, който може да приема параметри чрез конструктора си.
 
-          ```csharp
+          ```c#
           [TypeFilter(typeof(MyTypeFilter), Arguments = new object[] { "MyValue" })]
             public class MyController : Controller
             {
@@ -1394,7 +1397,8 @@ Connection string: Server=(localdb)\\mssqllocaldb;Database=DbName;Trusted_Connec
                     return View();
                 }
             }
-                   ```
+          ```
+
 
           
           --------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1717,6 +1721,31 @@ Connection string: Server=(localdb)\\mssqllocaldb;Database=DbName;Trusted_Connec
    - CORS позволява на сървърите да контролират достъпа до своите ресурси, като задават специфични HTTP заглавия, които указват на браузъра дали да разреши достъпа до ресурсите от външни домейни.
   
    - Когато уеб приложение прави заявка към ресурс на различен домейн, браузърът първо изпраща така наречената "preflight" заявка (OPTIONS заявка), за да провери дали сървърът разрешава този тип заявка от външния домейн. Сървърът отговаря със CORS заглавия, които указват дали заявката е разрешена.
+
+          
+          --------------------------------------------------------------------------------------------------------------------------------------------------
+
+ <br/>
+ 
+## Advanced Identity
+
+1. Пълен контрол върху идентичността в ASP.NET Core
+
+   - Отнася се до възможността за разширяване и персонализиране на стандартното поведение на идентичността, за да отговори на специфичните нужди на приложението.
+  
+   - Разширяване на IdentityUser
+  
+        - ASP.NET Core Identity предоставя клас IdentityUser, който представлява потребител. Този клас може да бъде разширен с допълнителни свойства, за да съхранява повече информация за потребителите.
+  
+          ```c#
+
+            public class ApplicationUser : IdentityUser
+            {
+                public string FirstName { get; set; }
+                public string LastName { get; set; }
+            }
+
+          ```
 
 
 
