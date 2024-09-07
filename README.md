@@ -1746,12 +1746,108 @@ Connection string: Server=(localdb)\\mssqllocaldb;Database=DbName;Trusted_Connec
             }
 
           ```
+    
+     - За да използвате персонализирания потребителски клас, трябва да конфигурирате идентичността в Startup.cs:
 
+          ```c#
+               public void ConfigureServices(IServiceCollection services)
+               {
+                   services.AddDbContext<ApplicationDbContext>(options =>
+                       options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+               
+                   services.AddIdentity<ApplicationUser, IdentityRole>()
+                       .AddEntityFrameworkStores<ApplicationDbContext>()
+                       .AddDefaultTokenProviders();
+               
+                   services.ConfigureApplicationCookie(options =>
+                   {
+                       options.LoginPath = "/Identity/Account/Login";
+                       options.LogoutPath = "/Identity/Account/Logout";
+                       options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                   });
+               
+                   services.AddControllersWithViews();
+               }
+         ```
+          
+         - Тук AddIdentity<ApplicationUser, IdentityRole>() указва, че се използва персонализираният клас ApplicationUser, вместо да се използва дефоутното: services.AddDefaultIdentity<IdentityUser>.AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
+   - Можете да конфигурирате пътищата за вход, изход и отказан достъп, като използвате ConfigureApplicationCookie:
 
+        ```c#
+         services.ConfigureApplicationCookie(options =>
+         {
+             options.LoginPath = "/Identity/Account/Login";
+             options.LogoutPath = "/Identity/Account/Logout";
+             options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+         });
+        ```
 
+2. Claims
 
+   - Твърденията (Claims) са мощен механизъм за удостоверяване и авторизация, който предоставя информация за потребителя под формата на двойки име-стойност. 
 
+   - В ASP.NET Core твърденията биват използвани за удостоверяване и авторизация чрез политики, които определят правилата за достъп до различни части на приложението.
+    
+   - Пример: Name: "John Doe"; Role: "Administrator"; EmployeeNumber: "12345"
+
+   - Твърденията могат да бъдат добавени към идентичността на потребителя при влизане в системата. Пример:
+  
+        ```c#
+         var claims = new List<Claim>
+         {
+             new Claim(ClaimTypes.Name, "John Doe"),
+             new Claim(ClaimTypes.Role, "Administrator"),
+             new Claim("EmployeeNumber", "12345")
+         };
+         
+         var identity = new ClaimsIdentity(claims, "CustomAuthentication");
+         var principal = new ClaimsPrincipal(identity);
+         await HttpContext.SignInAsync(principal);
+       ```
+
+     - конфигуриране на политика за твърдения:
+
+       ```c#
+         services.AddAuthorization(options =>
+         {
+             options.AddPolicy("EmployeeOnly", policy => policy.RequireClaim("EmployeeNumber"));
+         });
+         ```
+
+     - Използване на политика в контролер
+    
+       ```c#
+       [Authorize(Policy = "EmployeeOnly")]
+       public IActionResult EmployeeDashboard() => View();
+       ```
+
+     - Проверки на твърдения могат да бъдат добавени директно към контролери или действия:
+    
+       ```c#
+       [Authorize]
+         public IActionResult Admin()
+         {
+             if (User.HasClaim(c => c.Type == "EmployeeNumber"))
+             {
+                 ViewBag.Message = "Welcome, employee!";
+                 return View();
+             }
+             return Unauthorized();
+         }
+         ```
+
+3. Roles
+
+   - Ролите са ключов елемент на управлението на достъпа и авторизацията в ASP.NET Core.
+   
+   - Те позволяват на разработчиците да определят и контролират достъпа до различни части на приложението въз основа на ролята, която е присвоена на потребителите. 
+      
+
+         
+      
+      
+       
 
 
 
