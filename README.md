@@ -1841,8 +1841,249 @@ Connection string: Server=(localdb)\\mssqllocaldb;Database=DbName;Trusted_Connec
 
    - Ролите са ключов елемент на управлението на достъпа и авторизацията в ASP.NET Core.
    
-   - Те позволяват на разработчиците да определят и контролират достъпа до различни части на приложението въз основа на ролята, която е присвоена на потребителите. 
+   - Те позволяват на разработчиците да определят и контролират достъпа до различни части на приложението въз основа на ролята, която е присвоена на потребителите.
+  
+   - За да enable-нем RoleManager:
+
+      ```c#
+        builder.Services.AddDefaultIdentity<IdentityUser>(…).AddRoles<IdentityRole>();
+      ```
+     
+   - Създаване на роли:
+  
+     ```c#
+        public async Task CreateRoles(IServiceProvider serviceProvider)
+         {
+             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+             string[] roleNames = { "Admin", "User", "Manager" };
+             IdentityResult roleResult;
+         
+             foreach (var roleName in roleNames)
+             {
+                 var roleExist = await roleManager.RoleExistsAsync(roleName);
+                 if (!roleExist)
+                 {
+                     roleResult = await roleManager.CreateAsync(new IdentityRole(roleName));
+                 }
+             }
+         }
+     ```
+
+   - Добавяне на потребител към роля:
+  
+     ```c#
+        public async Task<IActionResult> AddUserToRole()
+         {
+             var user = await userManager.FindByEmailAsync("user@example.com");
+             if (user != null)
+             {
+                 var result = await userManager.AddToRoleAsync(user, "Admin");
+                 if (result.Succeeded)
+                 {
+                     // Потребителят е добавен към ролята "Admin"
+                 }
+             }
+         }
+      ```
+
+   - Можете да ограничите достъпа до контролери или действия чрез атрибута [Authorize], като посочите необходимите роли:
+  
+      ```c#
+      [Authorize(Roles = "Admin")]
+      public class AdminController : Controller
+      {
+          public IActionResult Index()
+          {
+              return View();
+          }
+      }
       
+      [Authorize(Roles = "User,Manager")]
+      public class UserController : Controller
+      {
+          public IActionResult Dashboard()
+          {
+              return View();
+          }
+      }
+      ```
+   
+   - Можете да проверите ролята на потребителя програмно в метода на контролера:
+
+     ```c#
+      [Authorize]
+      public IActionResult Dashboard()
+      {
+          if (User.IsInRole("Admin"))
+          {
+              ViewBag.Message = "Welcome, Admin!";
+          }
+          else if (User.IsInRole("User"))
+          {
+              ViewBag.Message = "Welcome, User!";
+          }
+          else
+          {
+              ViewBag.Message = "Welcome, Guest!";
+          }
+          return View();
+      }
+     ```
+     
+4. Authentication Types in ASP.NET Core
+
+   - Удостоверяването е процесът на проверка на идентичността на потребителите, които се опитват да влязат в системата.
+
+   - Видове аутентикация:
+     
+      - Удостоверяване с бисквитки (Cookie-based Authentication)
+    
+         - Най-често използваното удостоверяване в уеб приложенията. Сесийните бисквитки се използват за съхранение на информация за потребителя след като той се е удостоверил.
+       
+         - Подходящо за класически уеб приложения, където клиентът и сървърът работят в същия домейн.
+       
+           ```c#
+           services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/Account/Login";
+                    options.LogoutPath = "/Account/Logout";
+                    options.AccessDeniedPath = "/Account/AccessDenied";
+                });
+            ```
+
+      - Удостоверяване с Windows (Windows Authentication)
+
+          - Използва операционната система за удостоверяване на потребителите. Най-често се използва в корпоративни среди с Active Directory.
+       
+          - Подходящо за интранет приложения, където клиентите и сървърите са в същия Windows домейн.
+       
+           ```c#
+           services.AddAuthentication(NegotiateDefaults.AuthenticationScheme)
+                .AddNegotiate();
+           ```
+
+     - Удостоверяване в облака (Cloud-based Authentication)
+    
+          - Удостоверяването и авторизацията се извършват от външна платформа като Azure AD, OAuth, или OpenID Connect.
+      
+     - Удостоверяване с JSON Web Tokens (JWT)
+    
+          - Модерен метод за удостоверяване, който използва JSON Web Tokens за сигурност на информацията. JWT е самостоятелен и се използва често при RESTful API.
+      
+          - Подходящо за SPA (Single Page Applications) и мобилни приложения, където се изисква сигурност и лекота на използване.
+      
+     - Социално удостоверяване (Social Authentication)
+
+          - Позволява на потребителите да се удостоверят с използването на своите съществуващи акаунти от социални мрежи като Google, Facebook, Twitter, и Microsoft.
+      
+          - Подходящо за уеб и мобилни приложения, които искат да улеснят процеса на регистрация и вход за потребителите.
+      
+             ```c#
+             services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+            })
+            .AddCookie()
+            .AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
+                googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+            })
+            .AddFacebook(facebookOptions =>
+            {
+                facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
+                facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+            });
+            ```
+
+5. JSON Web Tokens
+
+   - Компактен, URL-базиран формат за представяне на твърдения между две страни.
+     
+   - JWT често се използва за удостоверяване и обмен на информация в уеб приложения, особено при създаване на RESTful API.
+  
+   - It must be stored (in local / session storage, cookies are also an option).
+  
+   - Аbsolutely secured.
+  
+   - As any normal auth JWT also has an expiration.
+
+   - Представлява JSON обект, който се състои от три части: заглавие (header), полезен товар (payload) и подпис (signature). Те са разделени с точки и са кодирани в Base64.
+  
+      - Заглавие (Header): Съдържа информация за алгоритъма за подписване и типа на токена.
+    
+      - Полезен товар (Payload): Съдържа твърдения (claims), които са изявления за обекта (например потребителски данни).
+
+      - Подпис (Signature): Използва се за проверка на целостта на токена и автентичността на изпращача.
+    
+   - Конфигуриране на JWT удостоверяване:
+  
+      - Инсталирайте необходимия пакет за JWT удостоверяване:
+
+         ```c#
+           dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
+         ```
+
+      - Добавете конфигурация за удостоверяване в метода ConfigureServices в Pragram.cs:
+    
+        ```c#
+        public void ConfigureServices(IServiceCollection services)
+         {
+             services.AddAuthentication(options =>
+             {
+                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+             })
+             .AddJwtBearer(options =>
+             {
+                 options.TokenValidationParameters = new TokenValidationParameters
+                 {
+                     ValidateIssuer = true,
+                     ValidateAudience = true,
+                     ValidateLifetime = true,
+                     ValidateIssuerSigningKey = true,
+                     ValidIssuer = Configuration["JWT:ValidIssuer"],
+                     ValidAudience = Configuration["JWT:ValidAudience"],
+                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))
+                 };
+             });
+         
+             services.AddControllers();
+         }
+         ```
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
          
       
