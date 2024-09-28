@@ -15,7 +15,7 @@
         </p>
         <hr class="my-4">
         <p class="lead">
-            @if (User.Identity.IsAuthenticated && await agents.ExistsByid(User.Id()))
+            @if (User.Identity.IsAuthenticated && await agents.ExistsByid(User.Id()) )
             {
                 <a asp-controller="House" asp-action="Add" class="btn btn-primary
 btn-lg"

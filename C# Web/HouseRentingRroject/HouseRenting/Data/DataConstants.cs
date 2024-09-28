@@ -23,5 +23,20 @@
             public const int PhoneNumberMaxLength = 15;
             public const int PhoneNumberMinLength = 7;
         }
+
+        public static class ApplicationUser
+        {
+            public const int UserFirstNameMaxLength = 12;
+            public const int UserFirstNameMinLength = 1;
+
+            public const int UserLastNameMaxLength = 15;
+            public const int UserLastNameMinLength = 3;
+        }
+
+        public class AdminUser
+        {
+            public const string AdminRoleName = "Administrator";
+            public const string AdminEmail = "adminmail@abv.bg";
+        }
     }
 }

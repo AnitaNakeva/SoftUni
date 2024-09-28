@@ -14,11 +14,11 @@ using House = HouseRenting.Data.Models.House;
 
 namespace HouseRenting.Data
 {
-    public class HouseRentingDbContext : IdentityDbContext
+    public class HouseRentingDbContext : IdentityDbContext<Models.ApplicationUser>
     {
        
 
-    public HouseRentingDbContext(DbContextOptions<HouseRentingDbContext> options)
+        public HouseRentingDbContext(DbContextOptions<HouseRentingDbContext> options)
             : base(options)
         {
         }
@@ -45,12 +45,12 @@ namespace HouseRenting.Data
                 .HasColumnType("decimal(18,2)");
 
             SeedUsers();
-            modelBuilder.Entity<IdentityUser>()
-                .HasData(AgentUser, GuestUser);
+            modelBuilder.Entity<Models.ApplicationUser>()
+                .HasData(AgentUser, GuestUser, AdminUser);
 
             SeedAgent();
             modelBuilder.Entity<Models.Agent>()
-                .HasData(Agent);
+                .HasData(Agent, AdminAgent);
 
             SeedCategories();
             modelBuilder.Entity<Category>()
@@ -67,6 +67,9 @@ namespace HouseRenting.Data
             base.OnModelCreating(modelBuilder);
         }
 
+        private Models.ApplicationUser AdminUser { get; set; }
+
+        private Models.Agent AdminAgent { get; set; }
 
         public DbSet<House> Houses { get; set; } = null!;
 
@@ -74,9 +77,9 @@ namespace HouseRenting.Data
 
         public DbSet<Models.Agent> Agents { get; set; } = null!;
 
-        private IdentityUser AgentUser { get; set;}
+        private Models.ApplicationUser AgentUser { get; set;}
 
-        private IdentityUser GuestUser { get; set;}
+        private Models.ApplicationUser GuestUser { get; set;}
 
         private Models.Agent Agent { get; set;}
 
@@ -94,31 +97,47 @@ namespace HouseRenting.Data
 
         private void SeedUsers()
         {
-            var hasher = new PasswordHasher<IdentityUser>();
+            var hasher = new PasswordHasher<Models.ApplicationUser>();
 
-            AgentUser = new IdentityUser()
+            AgentUser = new Models.ApplicationUser()
             {
                 Id = "dea12856-c198-4129-b3f3-b893d8395082",
                 UserName = "agent@mail.com",
                 NormalizedUserName = "agent@mail.com",
                 Email = "agent@mail.com",
-                NormalizedEmail = "agent@mail.com"
+                NormalizedEmail = "agent@mail.com",
+                FirstName = "Linda",
+                LastName = "Michaels"
             };
 
             AgentUser.PasswordHash =
-            hasher.HashPassword(AgentUser, "agent123");
+                hasher.HashPassword(AgentUser, "agent123");
 
-            GuestUser = new IdentityUser()
+            GuestUser = new Models.ApplicationUser()
             {
                 Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                 UserName = "guest@mail.com",
                 NormalizedUserName = "guest@mail.com",
                 Email = "guest@mail.com",
-                NormalizedEmail = "guest@mail.com"
+                NormalizedEmail = "guest@mail.com",
+                FirstName = "Teodor",
+                LastName = "Lesly"
             };
 
             GuestUser.PasswordHash =
-            hasher.HashPassword(AgentUser, "guest123");
+                hasher.HashPassword(AgentUser, "guest123");
+
+            AdminUser = new Models.ApplicationUser()
+            {
+                Id = "bcb4f072-ecca-43c9-ab26-c060c6f364e4",
+                Email = "adminmail@abv.bg",
+                NormalizedEmail = "adminmail@abv.bg",
+                UserName = "adminmail@abv.bg",
+                NormalizedUserName = "adminmail@abv.bg",
+                FirstName = "Great",
+                LastName = "Admin"
+            };
+            AdminUser.PasswordHash = hasher.HashPassword(AgentUser, "admin123");
         }
 
         private void SeedAgent()
@@ -129,6 +148,14 @@ namespace HouseRenting.Data
                 PhoneNumber = "+359888888888",
                 UserId = AgentUser.Id
             };
+
+            AdminAgent = new Models.Agent()
+            {
+                Id = 4,
+                PhoneNumber = "+359123456789",
+                UserId = AdminUser.Id
+            };
+
         }
 
         private void SeedCategories()

@@ -4,14 +4,14 @@
     "C:\\Users\\Ita\\Desktop\\C sharp Git\\SoftUni\\C# Web\\HouseRentingRroject\\HouseRenting\\HouseRenting.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Ita\\Desktop\\C sharp Git\\SoftUni\\C# Web\\HouseRentingRroject\\HouseRenting\\HouseRenting.csproj": {
+    "C:\\Users\\Ita\\Desktop\\C sharp Git\\SoftUni\\C# Web\\HouseRentingRroject\\HouseRenting.Core\\HouseRenting.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ita\\Desktop\\C sharp Git\\SoftUni\\C# Web\\HouseRentingRroject\\HouseRenting\\HouseRenting.csproj",
-        "projectName": "HouseRenting",
-        "projectPath": "C:\\Users\\Ita\\Desktop\\C sharp Git\\SoftUni\\C# Web\\HouseRentingRroject\\HouseRenting\\HouseRenting.csproj",
+        "projectUniqueName": "C:\\Users\\Ita\\Desktop\\C sharp Git\\SoftUni\\C# Web\\HouseRentingRroject\\HouseRenting.Core\\HouseRenting.Core.csproj",
+        "projectName": "HouseRenting.Core",
+        "projectPath": "C:\\Users\\Ita\\Desktop\\C sharp Git\\SoftUni\\C# Web\\HouseRentingRroject\\HouseRenting.Core\\HouseRenting.Core.csproj",
         "packagesPath": "C:\\Users\\Ita\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ita\\Desktop\\C sharp Git\\SoftUni\\C# Web\\HouseRentingRroject\\HouseRenting\\obj\\",
+        "outputPath": "C:\\Users\\Ita\\Desktop\\C sharp Git\\SoftUni\\C# Web\\HouseRentingRroject\\HouseRenting.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "D:\\hui3\\NuGetPackages"
@@ -44,17 +44,174 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.33, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.33, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.33, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Ita\\Desktop\\C sharp Git\\SoftUni\\C# Web\\HouseRentingRroject\\HouseRentingSystem.Data\\HouseRenting.Data.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Ita\\Desktop\\C sharp Git\\SoftUni\\C# Web\\HouseRentingRroject\\HouseRentingSystem.Data\\HouseRenting.Data.csproj",
+        "projectName": "HouseRenting.Data",
+        "projectPath": "C:\\Users\\Ita\\Desktop\\C sharp Git\\SoftUni\\C# Web\\HouseRentingRroject\\HouseRentingSystem.Data\\HouseRenting.Data.csproj",
+        "packagesPath": "C:\\Users\\Ita\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Ita\\Desktop\\C sharp Git\\SoftUni\\C# Web\\HouseRentingRroject\\HouseRentingSystem.Data\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "D:\\hui3\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Ita\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.33, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.33, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.33, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Ita\\Desktop\\C sharp Git\\SoftUni\\C# Web\\HouseRentingRroject\\HouseRenting\\HouseRenting.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Ita\\Desktop\\C sharp Git\\SoftUni\\C# Web\\HouseRentingRroject\\HouseRenting\\HouseRenting.csproj",
+        "projectName": "HouseRenting",
+        "projectPath": "C:\\Users\\Ita\\Desktop\\C sharp Git\\SoftUni\\C# Web\\HouseRentingRroject\\HouseRenting\\HouseRenting.csproj",
+        "packagesPath": "C:\\Users\\Ita\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Ita\\Desktop\\C sharp Git\\SoftUni\\C# Web\\HouseRentingRroject\\HouseRenting\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "D:\\hui3\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Ita\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\Ita\\Desktop\\C sharp Git\\SoftUni\\C# Web\\HouseRentingRroject\\HouseRenting.Core\\HouseRenting.Core.csproj": {
+                "projectPath": "C:\\Users\\Ita\\Desktop\\C sharp Git\\SoftUni\\C# Web\\HouseRentingRroject\\HouseRenting.Core\\HouseRenting.Core.csproj"
+              },
+              "C:\\Users\\Ita\\Desktop\\C sharp Git\\SoftUni\\C# Web\\HouseRentingRroject\\HouseRentingSystem.Data\\HouseRenting.Data.csproj": {
+                "projectPath": "C:\\Users\\Ita\\Desktop\\C sharp Git\\SoftUni\\C# Web\\HouseRentingRroject\\HouseRentingSystem.Data\\HouseRenting.Data.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
             "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
               "target": "Package",
               "version": "[6.0.20, )"
             },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[6.0.20, )"
+              "version": "[6.0.33, )"
             },
             "Microsoft.AspNetCore.Identity.UI": {
               "target": "Package",
-              "version": "[6.0.20, )"
+              "version": "[6.0.33, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
@@ -68,11 +225,17 @@
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[6.0.20, )"
+              "version": "[6.0.33, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[6.0.33, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
-              "version": "[6.0.20, )"
+              "version": "[6.0.33, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",

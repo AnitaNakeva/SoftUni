@@ -25,21 +25,25 @@
             <div class="form-inline">
                 @if (this.User.Identity.IsAuthenticated)
                 {
-                    @if (await houses.HasAgentWithId(Model.Id, User.Id()))
+                    @if (await houses.HasAgentWithId(Model.Id, User.Id()) || User.IsAdmin())
                     {
                         <a class="btn btn-warning" asp-controller="House" aspaction="Edit"
                            asp-route-id="@Model.Id">Edit</a>
                         <a class="ml-2 btn btn-danger" asp-controller="House" aspaction="Delete"
                            asp-route-id="@Model.Id">Delete</a>
                     }
-                    @if (!Model.IsRented && await agents.ExistsByid(User.Id()) == false)
+
+                    @if (!Model.IsRented)
                     {
-                        <form class="ml-2" asp-controller="House"
-                              asp-action="Rent" asp-route-id="@Model.Id"
-                              method="post">
-                            <input class="btn btn-primary" type="submit"
-                                   value="Rent" />
-                        </form>
+                        @if (!await agents.ExistsByid(User.Id()) || User.IsAdmin())
+                        {
+                            <form class="ml-2" asp-controller="House"
+                                  asp-action="Rent" asp-route-id="@Model.Id"
+                                  method="post">
+                                <input class="btn btn-primary" type="submit"
+                                       value="Rent" />
+                            </form>
+                        }
                     }
                     else if (await houses.IsRentedByUserWithId(Model.Id, User.Id()))
                     {
@@ -55,6 +59,10 @@
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title">Agent Info</h5>
+                    @if(Model.Agent.FullName != null)
+                    {
+                        <p class="card-text">Name: @Model.Agent.FullName</p>
+                    }
                     <p class="card-text">Email: @Model.Agent.Email</p>
                     <p class="card-text">Phone Number: @Model.Agent.PhoneNumber</p>
                 </div>

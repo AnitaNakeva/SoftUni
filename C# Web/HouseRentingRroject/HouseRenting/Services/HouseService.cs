@@ -15,10 +15,12 @@ namespace HouseRenting.Services
     public class HouseService : IHouseService
     {
         private readonly HouseRentingDbContext _data;
+        private readonly IApplicationUserService _user;
 
-        public HouseService(HouseRentingDbContext data)
+        public HouseService(HouseRentingDbContext data, IApplicationUserService user)
         {
             _data = data;
+            _user = user;
         }
 
         public HouseQueryServiceModel All(string category = null, string serchTerm = null,
@@ -180,7 +182,7 @@ namespace HouseRenting.Services
 
         public async Task<HouseDetailsServiceModel> HouseDetailsBYId(int id)
         {
-            return await _data
+            var house = await _data
                 .Houses
                 .Where(h => h.Id == id)
                 .Select(h => new HouseDetailsServiceModel()
@@ -196,11 +198,24 @@ namespace HouseRenting.Services
                     Agent = new AgentServiceModel()
                     {
                         PhoneNumber = h.Agent.PhoneNumber,
-                        Email = h.Agent.User.Email
+                        Email = h.Agent.User.Email,
+                        UserId = h.Agent.UserId,
+                        FullName = null
                     }
                 })
                 .FirstOrDefaultAsync();
+
+            if (house?.Agent != null)
+            {
+                house.Agent.FullName = await _user.UserFullName(house.Agent.UserId);
+            }
+
+            return house;
         }
+
+
+
+
 
         public async Task Edit(int houseiD, string title, string address, string description, string imageUrl, decimal price, int categoryId)
         {

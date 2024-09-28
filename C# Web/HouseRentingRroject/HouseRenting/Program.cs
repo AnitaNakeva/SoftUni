@@ -1,10 +1,12 @@
 using HouseRenting.Contracts;
 using HouseRenting.Data;
+using HouseRenting.Data.Models;
 using HouseRenting.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using HouseRenting.Infrastructure;
 
 namespace HouseRenting
 {
@@ -19,14 +21,14 @@ namespace HouseRenting
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+            builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
                 options.Password.RequireDigit = false;
-                options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
             })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<HouseRentingDbContext>();
 
             builder.Services.AddControllersWithViews(options =>
@@ -38,6 +40,7 @@ namespace HouseRenting
             builder.Services.AddScoped<IHouseService, HouseService>();
             builder.Services.AddScoped<IAgentService, AgentService>();
             builder.Services.AddTransient<IStatisticsService, StatisticsService>();
+            builder.Services.AddTransient<IApplicationUserService, ApplicationUserService>();
             
             var app = builder.Build();
 
@@ -72,6 +75,8 @@ namespace HouseRenting
                 app.MapDefaultControllerRoute();
                 app.MapRazorPages();
             });
+
+            app.SeedAdmin();
 
             app.Run();
         }
